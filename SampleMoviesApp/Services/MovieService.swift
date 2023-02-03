@@ -8,8 +8,8 @@
 import Foundation
 import RxSwift
 
-class MovieDetailsService{
-    let provider = Provider<MoviesAPIEnpoint>()
+class MovieService{
+    let provider = Provider<MovieEndpoint>()
     
     func getMovies(offset: UInt) -> Observable<[Movie]> {
         return provider.perform(.getTrendingMovies(offset: offset))

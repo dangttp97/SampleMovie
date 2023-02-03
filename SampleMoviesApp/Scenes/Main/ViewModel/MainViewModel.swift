@@ -9,10 +9,17 @@ import Foundation
 import RxSwift
 
 class MainViewModel{
-    let service = MovieService()
+    private let service = MovieService()
+    private var offset: UInt = 1
     var movies: Observable<[Movie]> = Observable.of([])
     
-    func getInitialMovies() -> Observable<[Movie]>{
-        return service.getMovies(offset: 1)
+    
+    func getInitialMovies(){
+        movies = service.getMovies(offset: offset)
+    }
+    
+    func fetchMoreMovies(){
+        offset += 1
+        _ = movies.concat(service.getMovies(offset: offset))
     }
 }

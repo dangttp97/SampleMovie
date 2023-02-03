@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum MoviesAPIEnpoint{
+enum MovieEndpoint{
     case getTrendingMovies(offset: UInt)
     case getMovieDetails(id: Int)
 }
 
-extension MoviesAPIEnpoint: Target{
+extension MovieEndpoint: Target{
     var body: Parameters? {
         return nil
     }
@@ -21,7 +21,7 @@ extension MoviesAPIEnpoint: Target{
         switch self{
         case .getTrendingMovies(offset: let offset):
             return ["page": offset]
-        case .getMovieDetails(id: let id):
+        case .getMovieDetails:
             return nil
         }
     }

@@ -8,9 +8,9 @@
 import UIKit
 
 extension UIImageView{
-    func image(from urlStr: String, onCompleteFetchingImage: ((_ imageData: Data?) -> Void)? = nil) throws {
+    func image(from urlStr: String, onCompleteFetchingImage: ((_ imageData: Data?) -> Void)? = nil) {
         let url = URL(string: (urlStr))!
-        let request = try? URLSession.shared.dataTask(with: URLRequest(url: url), completionHandler: { data, response, err in
+        let request = URLSession.shared.dataTask(with: URLRequest(url: url), completionHandler: { data, response, err in
             guard (err != nil) else {
                 return
             }

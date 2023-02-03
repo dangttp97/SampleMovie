@@ -14,6 +14,8 @@ class Provider<T: Target>{
         Observable<ReturnType>.create{ observable in
             var dataRequest: DataRequest
             
+            print(target)
+            
             if let headers = target.headers,
                let urlParameters = target.urlParameters{
                 dataRequest = AF.request(target.baseURL.appendingPathExtension(target.path),
