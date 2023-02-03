@@ -14,12 +14,28 @@ struct Movie{
     var popularity: Float
     var genres: [Genre]
     
+
+    
     enum MovieKeys: String, CodingKey{
         case id = "id"
         case name = "title"
         case backgroundPath = "backdrop_path"
         case popularity
         case genres
+    }
+}
+
+extension Movid: EmptyModel{
+    private init() {
+        id = 0
+        name = ""
+        backgroundPath = ""
+        popularity = 0
+        genres = []
+    }
+    
+    static func emptyValue() -> Movie {
+        return Movie()
     }
 }
 

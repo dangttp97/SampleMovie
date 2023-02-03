@@ -18,4 +18,5 @@ protocol Target{
     var headers: [String: String]? { get }
     var body: Parameters? { get }
     var urlParameters: [String: Any]? { get }
+    var encoding: Encoding? { get }
 }

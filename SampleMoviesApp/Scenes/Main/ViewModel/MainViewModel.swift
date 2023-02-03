@@ -15,11 +15,11 @@ class MainViewModel{
     
     
     func getInitialMovies(){
-        movies = service.getMovies(offset: offset)
+        movies = service.getMovies(offset: offset).map{ return $0.results }
     }
     
     func fetchMoreMovies(){
         offset += 1
-        _ = movies.concat(service.getMovies(offset: offset))
+        _ = movies.concat(service.getMovies(offset: offset).map{ return $0.results })
     }
 }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		093AAC462F65838D25A9CA59 /* Pods_SampleMoviesApp_SampleMoviesAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B35495BFF7D9FD70E55B7704 /* Pods_SampleMoviesApp_SampleMoviesAppUITests.framework */; };
 		B49C49720ACDB14E5334E77C /* Pods_SampleMoviesAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872C10B12171AB2C9AF07AB9 /* Pods_SampleMoviesAppTests.framework */; };
+		CAA57D6F298D0193001BFFA6 /* Request+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA57D6E298D0193001BFFA6 /* Request+Extensions.swift */; };
+		CAA57D71298D07CE001BFFA6 /* Paging.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA57D70298D07CE001BFFA6 /* Paging.swift */; };
 		CAE44FE9298CC8F300306E64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAE44FE8298CC8F300306E64 /* Main.storyboard */; };
 		CAE44FEB298CCB5600306E64 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE44FEA298CCB5600306E64 /* UIViewController+Extensions.swift */; };
 		CAE44FEC298CCFA200306E64 /* Pods_SampleMoviesApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131E284E4DE6A17E83B814EC /* Pods_SampleMoviesApp.framework */; };
@@ -63,6 +65,8 @@
 		B35495BFF7D9FD70E55B7704 /* Pods_SampleMoviesApp_SampleMoviesAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleMoviesApp_SampleMoviesAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C753778CEAFB8E9A8E478378 /* Pods-SampleMoviesApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleMoviesApp.release.xcconfig"; path = "Target Support Files/Pods-SampleMoviesApp/Pods-SampleMoviesApp.release.xcconfig"; sourceTree = "<group>"; };
 		C8F636F48EFF6A12F19950E3 /* Pods-SampleMoviesAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleMoviesAppTests.release.xcconfig"; path = "Target Support Files/Pods-SampleMoviesAppTests/Pods-SampleMoviesAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		CAA57D6E298D0193001BFFA6 /* Request+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Request+Extensions.swift"; sourceTree = "<group>"; };
+		CAA57D70298D07CE001BFFA6 /* Paging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
 		CAE44FE8298CC8F300306E64 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		CAE44FEA298CCB5600306E64 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		F6F4728C298B5A7E00C3C77C /* SampleMoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleMoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +235,7 @@
 			children = (
 				F6F472E0298B731100C3C77C /* Movie.swift */,
 				F6F47309298BD02C00C3C77C /* Genre.swift */,
+				CAA57D70298D07CE001BFFA6 /* Paging.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 			children = (
 				F6F472E3298B752000C3C77C /* UIImageView+Extensions.swift */,
 				CAE44FEA298CCB5600306E64 /* UIViewController+Extensions.swift */,
+				CAA57D6E298D0193001BFFA6 /* Request+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -557,7 +563,9 @@
 				F6F47308298BC3CD00C3C77C /* Environment.swift in Sources */,
 				F6F472C8298B605700C3C77C /* BookingViewController.swift in Sources */,
 				F6F4730A298BD02C00C3C77C /* Genre.swift in Sources */,
+				CAA57D6F298D0193001BFFA6 /* Request+Extensions.swift in Sources */,
 				F6F472F9298BA3D600C3C77C /* Target.swift in Sources */,
+				CAA57D71298D07CE001BFFA6 /* Paging.swift in Sources */,
 				F6F472D1298B62EE00C3C77C /* MovieService.swift in Sources */,
 				F6F472DA298B6C4800C3C77C /* MainViewController.swift in Sources */,
 				F6F472E1298B731100C3C77C /* Movie.swift in Sources */,

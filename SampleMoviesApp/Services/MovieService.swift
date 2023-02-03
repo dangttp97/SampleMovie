@@ -11,7 +11,7 @@ import RxSwift
 class MovieService{
     let provider = Provider<MovieEndpoint>()
     
-    func getMovies(offset: UInt) -> Observable<[Movie]> {
+    func getMovies(offset: UInt) -> Observable<Paging<Movie>> {
         return provider.perform(.getTrendingMovies(offset: offset))
     }
     

@@ -9,25 +9,17 @@ import Foundation
 import Alamofire
 import RxSwift
 
+typealias EmptyModel = EmptyResponse
+
 class Provider<T: Target>{
     func perform<ReturnType>(_ target: T) -> Observable<ReturnType> where ReturnType: Decodable{
-        Observable<ReturnType>.create{ observable in
-            var dataRequest: DataRequest
-            
-            print(target)
-            
-            if let headers = target.headers,
-               let urlParameters = target.urlParameters{
-                dataRequest = AF.request(target.baseURL.appendingPathExtension(target.path),
+        return Observable<ReturnType>.create{ observable in
+            let url = target.baseURL.appendingPathExtension(target.path)
+            let dataRequest = AF.request(url,
                                          method: Alamofire.HTTPMethod(rawValue: target.method.rawValue),
-                                         parameters: urlParameters,
-                                         encoding: URLEncoding.default,
-                                         headers: HTTPHeaders(headers))
-            } else{
-                dataRequest = AF.request(target.baseURL.appendingPathExtension(target.path),
-                                         method: Alamofire.HTTPMethod(rawValue: target.method.rawValue))
-            }
-            
+                                         parameters: target.urlParameters,
+                                         encoding: target.encoding ?? URLEncoding.default,
+                                         headers: target.headers == nil ? nil : HTTPHeaders(target.headers!)).debugLog()
             dataRequest.responseDecodable(of: ReturnType.self){ response in
                 guard let returnValue = response.value, response.error == nil
                 else {
