@@ -8,9 +8,8 @@
 import UIKit
 
 extension UIViewController{
-    class func instantiate<T>(storyboardName: String? = nil, viewControllerId: String? = nil) -> T where T: UIViewController{
-        let storyboard = UIStoryboard(name: storyboardName ?? String(describing: T.self), bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: viewControllerId ?? String(describing: T.self))
-        return viewController as! T
+    class func instantiate<T: UIViewController>(with storyboard: Storyboard) -> T {
+        let storyboard = UIStoryboard(name: storyboard.rawValue, bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: String(describing: T.self)) as! T
     }
 }

@@ -8,11 +8,12 @@ target 'SampleMoviesApp' do
   # Pods for SampleMoviesApp
   pod "RxSwift"
   pod "RxCocoa"
-  pod "Alamofire"
 
   target 'SampleMoviesAppTests' do
     inherit! :search_paths
     # Pods for testing
+    pod "RxTest"
+    pod "RxBlocking"
   end
 
   target 'SampleMoviesAppUITests' do

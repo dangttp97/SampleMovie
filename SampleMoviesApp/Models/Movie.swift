@@ -10,32 +10,18 @@ import Foundation
 struct Movie{
     var id: Int
     var name: String
-    var backgroundPath: String
+    var backgroundPath: String?
     var popularity: Float
-    var genres: [Genre]
+    var genreIds: [UInt]
+    var releasedDate: Date
     
-
-    
-    enum MovieKeys: String, CodingKey{
+    fileprivate enum MovieKeys: String, CodingKey{
         case id = "id"
         case name = "title"
         case backgroundPath = "backdrop_path"
         case popularity
-        case genres
-    }
-}
-
-extension Movid: EmptyModel{
-    private init() {
-        id = 0
-        name = ""
-        backgroundPath = ""
-        popularity = 0
-        genres = []
-    }
-    
-    static func emptyValue() -> Movie {
-        return Movie()
+        case genreIds = "genre_ids"
+        case releasedDate = "release_date"
     }
 }
 
@@ -46,7 +32,8 @@ extension Movie: Decodable{
         popularity = try container.decode(Float.self, forKey: .popularity)
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        backgroundPath = try container.decode(String.self, forKey: .backgroundPath)
-        genres = try container.decode([Genre].self, forKey: .genres)
+        backgroundPath = try? container.decode(String.self, forKey: .backgroundPath)
+        genreIds = try container.decode([UInt].self, forKey: .genreIds)
+        releasedDate = try container.decode(Date.self, forKey: .releasedDate)
     }
 }

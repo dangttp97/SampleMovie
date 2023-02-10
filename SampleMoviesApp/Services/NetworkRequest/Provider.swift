@@ -6,33 +6,77 @@
 //
 
 import Foundation
-import Alamofire
 import RxSwift
 
-typealias EmptyModel = EmptyResponse
-
-class Provider<T: Target>{
-    func perform<ReturnType>(_ target: T) -> Observable<ReturnType> where ReturnType: Decodable{
+class Provider<T: Endpoint>{
+    func perform<ReturnType>(_ endpoint: T) -> Observable<ReturnType> where ReturnType: Decodable{
         return Observable<ReturnType>.create{ observable in
-            let url = target.baseURL.appendingPathExtension(target.path)
-            let dataRequest = AF.request(url,
-                                         method: Alamofire.HTTPMethod(rawValue: target.method.rawValue),
-                                         parameters: target.urlParameters,
-                                         encoding: target.encoding ?? URLEncoding.default,
-                                         headers: target.headers == nil ? nil : HTTPHeaders(target.headers!)).debugLog()
-            dataRequest.responseDecodable(of: ReturnType.self){ response in
-                guard let returnValue = response.value, response.error == nil
-                else {
-                    observable.onError(response.error ?? NetworkError.unknown)
+            var url = endpoint.baseURL.appendingPathComponent(endpoint.path)
+            
+            if let urlParams = endpoint.urlParameters{
+                var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+                
+                components?.queryItems = urlParams.map{
+                    return URLQueryItem(name: $0.key, value: "\($0.value)")
+                }
+                
+                url = components?.url == nil ? url : components!.url!
+            }
+            
+            var urlRequest = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: TimeInterval(15000))
+            
+            urlRequest.httpMethod = endpoint.method.rawValue
+            urlRequest.allHTTPHeaderFields = endpoint.headers
+            
+            if let body = endpoint.body{
+                do {
+                    let bodyData = try JSONSerialization.data(withJSONObject: body, options: [])
+                    urlRequest.httpBody = bodyData
+                } catch {
+                    observable.onError(error)
+                }
+            }
+            
+#if DEBUG
+            NetworkLogger.log(request: urlRequest)
+#endif
+            
+            let request = URLSession.shared.dataTask(with: urlRequest){ data, res, err in
+#if DEBUG
+                NetworkLogger.log(response: res as? HTTPURLResponse, data: data, error: err)
+#endif
+                
+                guard let data = data,
+                      let statusCode = (res as? HTTPURLResponse)?.statusCode,
+                      (200...399).contains(statusCode),
+                      err == nil
+                else{
+                    observable.onError(err!)
                     return
                 }
                 
-                observable.onNext(returnValue)
+                do{
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    
+                    let obj = try decoder.decode(ReturnType.self, from: data)
+                    
+                    observable.onNext(obj)
+                    
+                } catch {
+                    observable.onError(error)
+                }
+                
                 observable.onCompleted()
             }
             
-            return Disposables.create {
-                dataRequest.cancel()
+            request.resume()
+            
+            return Disposables.create{
+                request.cancel()
             }
         }
     }

@@ -10,21 +10,12 @@ import Foundation
 struct Paging<T: Decodable>{
     var pageNumber : UInt
     var results: [T]
+    var totalPages: Int
 
-    enum CodingKeys: String, CodingKey{
+    private enum CodingKeys: String, CodingKey{
         case pageNumber = "page"
-        case results
-    }
-}
-
-extension Paging: EmptyModel{
-    private init(){
-        pageNumber = 0
-        results = []
-    }
-    
-    static func emptyValue() -> Paging<T> {
-        return Paging<T>()
+        case results = "results"
+        case totalPages = "total_pages"
     }
 }
 
@@ -32,7 +23,14 @@ extension Paging: Decodable{
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        try pageNumber = container.decode(UInt.self, forKey: .pageNumber)
-        try results = container.decode([T].self, forKey: .results)
+        pageNumber = try container.decode(UInt.self, forKey: .pageNumber)
+        results = try container.decode([T].self, forKey: .results)
+        totalPages = try container.decode(Int.self, forKey: .totalPages)
+    }
+}
+
+extension Paging: Equatable{
+    static func == (lhs: Paging<T>, rhs: Paging<T>) -> Bool {
+        return lhs.pageNumber == rhs.pageNumber && lhs.results.count == rhs.results.count && lhs.totalPages == rhs.totalPages
     }
 }

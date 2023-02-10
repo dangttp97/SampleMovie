@@ -11,7 +11,7 @@ struct Genre{
     var id: Int
     var name: String
     
-    enum GenreKeys: String, CodingKey{
+    fileprivate enum CodingKeys: String, CodingKey{
         case id
         case name
     }
@@ -19,7 +19,7 @@ struct Genre{
 
 extension Genre: Decodable{
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: GenreKeys.self)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)

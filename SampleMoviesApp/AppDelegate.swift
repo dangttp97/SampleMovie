@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #unavailable(iOS 13.0){
             window = UIWindow(frame: UIScreen.main.bounds)
             
-            let mainVC = MainViewController.instantiate()
+            let mainVC = MainViewController.instantiate(with: .main)
+            
             window?.rootViewController = mainVC
             window?.makeKeyAndVisible()
         }
@@ -31,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        let mainVC = MainViewController.instantiate()
+        let mainVC = MainViewController.instantiate(with: .main)
+        
         window?.rootViewController = mainVC
         window?.makeKeyAndVisible()
     }
